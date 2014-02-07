@@ -22,7 +22,7 @@ public class TestLoginServlet {
 
         sut.doPost(request, response);
 
-        verify(response).sendRedirect("index.jsp");
+        verify(response).sendRedirect("index.jsp?errorCode=EmptyUsername");
     }
 
 }
