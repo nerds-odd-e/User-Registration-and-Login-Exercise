@@ -1,5 +1,11 @@
 public class User {
-    public User(String username, String password) {
+    private final String password;
 
+    public User(String username, String password) {
+        this.password = password;
+    }
+
+    public String getPassword() {
+        return password;
     }
 }
