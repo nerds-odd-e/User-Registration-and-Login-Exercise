@@ -6,7 +6,7 @@ import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-public class AuthenticatorTest {
+public class TestAuthenticator {
 
     UserRepository repository = mock(UserRepository.class);
     Authenticator authenticator = new Authenticator(repository);
