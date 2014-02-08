@@ -12,7 +12,8 @@ import static org.mockito.Mockito.when;
 
 public class TestLoginServlet {
 
-    LoginServlet sut = new LoginServlet();
+    Authenticator authenticator = mock(Authenticator.class);
+    LoginServlet sut = new LoginServlet(authenticator);
     HttpServletRequest request = mock(HttpServletRequest.class);
     HttpServletResponse response = mock(HttpServletResponse.class);
 
@@ -23,7 +24,7 @@ public class TestLoginServlet {
 
         sut.doPost(request, response);
 
-        verify(response).sendRedirect("index.jsp?errorCode=EmptyUsername");
+        verify(response).sendRedirect("index.jsp?result=EmptyUsername");
     }
 
     @Test
@@ -33,7 +34,19 @@ public class TestLoginServlet {
 
         sut.doPost(request, response);
 
-        verify(response).sendRedirect("index.jsp?errorCode=EmptyPassword");
+        verify(response).sendRedirect("index.jsp?result=EmptyPassword");
+    }
+
+    @Test
+    public void successful_login() throws ServletException, IOException {
+        setRequestParameter("username", "username");
+        setRequestParameter("password", "password");
+
+        when(authenticator.authenticate("username", "password")).thenReturn(true);
+
+        sut.doPost(request, response);
+
+        verify(response).sendRedirect("index.jsp?result=SuccessfulLogin");
     }
 
     private void setRequestParameter(String key, String value) {
