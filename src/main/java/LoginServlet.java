@@ -31,8 +31,10 @@ public class LoginServlet extends HttpServlet {
             return;
         }
 
-        authenticator.authenticate(username, password);
-        resp.sendRedirect(createLoginUrlWithErrorCode("SuccessfulLogin"));
+        if (authenticator.authenticate(username, password))
+            resp.sendRedirect(createLoginUrlWithErrorCode("SuccessfulLogin"));
+        else
+            resp.sendRedirect(createLoginUrlWithErrorCode("FailedLogin"));
     }
 
     private String createLoginUrlWithErrorCode(String errorCode) {

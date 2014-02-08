@@ -6,6 +6,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
 
+import static org.mockito.Matchers.anyString;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -41,12 +42,22 @@ public class TestLoginServlet {
     public void successful_login() throws ServletException, IOException {
         setRequestParameter("username", "username");
         setRequestParameter("password", "password");
-
         when(authenticator.authenticate("username", "password")).thenReturn(true);
 
         sut.doPost(request, response);
 
         verify(response).sendRedirect("index.jsp?result=SuccessfulLogin");
+    }
+
+    @Test
+    public void failed_login() throws ServletException, IOException {
+        setRequestParameter("username", "username");
+        setRequestParameter("password", "wrongPassword");
+        when(authenticator.authenticate("username", "wrongPassword")).thenReturn(false);
+
+        sut.doPost(request, response);
+
+        verify(response).sendRedirect("index.jsp?result=FailedLogin");
     }
 
     private void setRequestParameter(String key, String value) {
