@@ -6,8 +6,19 @@ import java.io.IOException;
 
 public class LoginServlet extends HttpServlet {
 
+    public static final String LOGIN_URL = "index.jsp";
+
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        resp.sendRedirect("index.jsp?errorCode=EmptyUsername");
+        if (req.getParameter("password").equals("")) {
+            resp.sendRedirect(createLoginUrlWithErrorCode("EmptyPassword"));
+            return;
+        }
+
+        resp.sendRedirect(createLoginUrlWithErrorCode("EmptyUsername"));
+    }
+
+    private String createLoginUrlWithErrorCode(String errorCode) {
+        return LOGIN_URL + "?errorCode=" + errorCode;
     }
 }
