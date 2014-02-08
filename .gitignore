@@ -1,3 +1,4 @@
 .idea
-CI Workshop Exercise.iml
+*.iml
 target
+.DS_Store
