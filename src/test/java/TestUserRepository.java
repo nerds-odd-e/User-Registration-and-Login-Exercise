@@ -15,6 +15,7 @@ public class TestUserRepository {
 
     private DBCollection users;
     private final UserRepository repository = new UserRepository();
+    private User actualUser;
 
     @Before
     public void initialUsersCollection() throws Exception {
@@ -28,9 +29,19 @@ public class TestUserRepository {
         createUser("anotherUsername", "anotherPassword");
         createUser("username", "password");
 
-        User actualUser = repository.find("username");
+        actualUser = repository.find("username");
 
         assertEquals("password", actualUser.getPassword());
+    }
+
+    @Test
+    public void cannot_find_user_by_name() {
+        createUser("username", "password");
+
+        actualUser = repository.find("notExistingUsername");
+
+        assertEquals("", actualUser.getUsername());
+        assertEquals("", actualUser.getPassword());
     }
 
     private void createUser(String username, String password) {

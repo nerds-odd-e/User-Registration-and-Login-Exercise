@@ -6,6 +6,9 @@ public class UserRepository {
     public User find(String username) {
         DBObject user = getUsers().findOne(new BasicDBObject("username", username));
 
+        if (user == null)
+            return new NotExistingUser();
+
         return new User(username, (String) user.get("password"));
     }
 
