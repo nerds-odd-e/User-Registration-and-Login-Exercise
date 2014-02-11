@@ -3,17 +3,23 @@ import org.junit.Test;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
 import java.io.IOException;
 
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 public class TestLoginServlet {
 
-    Authenticator authenticator = mock(Authenticator.class);
-    LoginServlet sut = new LoginServlet(authenticator);
+    class TestClass4LoginServlet extends LoginServlet {
+
+        private User user = mock(User.class);
+
+        protected User getUser(String username) {
+            return user;
+        }
+
+    }
+
+    TestClass4LoginServlet sut = new TestClass4LoginServlet();
     HttpServletRequest request = mock(HttpServletRequest.class);
     HttpServletResponse response = mock(HttpServletResponse.class);
 
@@ -41,7 +47,7 @@ public class TestLoginServlet {
     public void successful_login() throws ServletException, IOException {
         setRequestParameter("username", "username");
         setRequestParameter("password", "password");
-        when(authenticator.authenticate("username", "password")).thenReturn(true);
+        when(sut.user.authenticate("password")).thenReturn(true);
 
         sut.doPost(request, response);
 
@@ -52,7 +58,7 @@ public class TestLoginServlet {
     public void failed_login() throws ServletException, IOException {
         setRequestParameter("username", "username");
         setRequestParameter("password", "wrongPassword");
-        when(authenticator.authenticate("username", "wrongPassword")).thenReturn(false);
+        when(sut.user.authenticate("wrongPassword")).thenReturn(false);
 
         sut.doPost(request, response);
 

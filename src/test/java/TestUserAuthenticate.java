@@ -6,10 +6,10 @@ import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-public class TestAuthenticator {
+public class TestUserAuthenticate {
 
     UserRepository repository = mock(UserRepository.class);
-    Authenticator authenticator = new Authenticator(repository);
+    private User user;
 
     @Before
     public void createUser() {
@@ -17,13 +17,16 @@ public class TestAuthenticator {
     }
 
     @Test
-    public void successful_authenticate() {
-        assertTrue(authenticator.authenticate("username", "password"));
+    public void successful_user_authenticate() {
+        user = User.create("username", repository);
+
+        assertTrue(user.authenticate("password"));
     }
 
     @Test
-    public void failed_authenticate() {
-        assertFalse(authenticator.authenticate("username", "wrongPassword"));
-    }
+    public void failed_user_authenticate() {
+        user = User.create("username", repository);
 
+        assertFalse(user.authenticate("wrongPassword"));
+    }
 }
