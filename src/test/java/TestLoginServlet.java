@@ -25,8 +25,7 @@ public class TestLoginServlet {
 
     @Test
     public void username_is_empty() throws ServletException, IOException {
-        setRequestParameter("username", "");
-        setRequestParameter("password", "password");
+        setRequestUsernameAndPasswordParameters("", "password");
 
         sut.doPost(request, response);
 
@@ -35,8 +34,7 @@ public class TestLoginServlet {
 
     @Test
     public void password_is_empty() throws ServletException, IOException {
-        setRequestParameter("username", "username");
-        setRequestParameter("password", "");
+        setRequestUsernameAndPasswordParameters("username", "");
 
         sut.doPost(request, response);
 
@@ -45,8 +43,7 @@ public class TestLoginServlet {
 
     @Test
     public void successful_login() throws ServletException, IOException {
-        setRequestParameter("username", "username");
-        setRequestParameter("password", "password");
+        setRequestUsernameAndPasswordParameters("username", "password");
         when(sut.user.authenticate("password")).thenReturn(true);
 
         sut.doPost(request, response);
@@ -56,8 +53,7 @@ public class TestLoginServlet {
 
     @Test
     public void failed_login() throws ServletException, IOException {
-        setRequestParameter("username", "username");
-        setRequestParameter("password", "wrongPassword");
+        setRequestUsernameAndPasswordParameters("username", "wrongPassword");
         when(sut.user.authenticate("wrongPassword")).thenReturn(false);
 
         sut.doPost(request, response);
@@ -67,6 +63,11 @@ public class TestLoginServlet {
 
     private void setRequestParameter(String key, String value) {
         when(request.getParameter(key)).thenReturn(value);
+    }
+
+    private void setRequestUsernameAndPasswordParameters(String username, String password) {
+        setRequestParameter("username", username);
+        setRequestParameter("password", password);
     }
 
 }
