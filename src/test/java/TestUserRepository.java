@@ -19,8 +19,8 @@ public class TestUserRepository {
 
     @Before
     public void initialUsersCollection() throws Exception {
-        MongoClient client = new MongoClient(MongoDB.Host);
-        DB db = client.getDB(MongoDB.PROPERTY);
+        MongoClient client = new MongoClient(MongoDB.HOST);
+        DB db = client.getDB(MongoDB.DBNAME);
         users = db.getCollection("Users");
     }
 
@@ -31,6 +31,7 @@ public class TestUserRepository {
 
         actualUser = repository.find("username");
 
+        assertEquals("username", actualUser.getUsername());
         assertEquals("password", actualUser.getPassword());
     }
 
