@@ -1,8 +1,9 @@
 **User Registration and Login exercise for CI workshop**
 
-Tests below read the following system properties. So, please set them when running tests in your IDE. pom.xml has those properties already.
+Code and test below read the following system properties. So, please set them when running tests in your IDE. pom.xml already has those properties setup for "mvn test".
 
-* Impacted tests
+* Impacted code and test
+	* UserRepository
 	* TestUserRepository
 	* LoginIntegrationTest
 * System properties
