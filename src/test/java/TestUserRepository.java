@@ -19,8 +19,8 @@ public class TestUserRepository {
 
     @Before
     public void initialUsersCollection() throws Exception {
-        MongoClient client = new MongoClient(System.getProperty("mongo.host"));
-        DB db = client.getDB(System.getProperty("mongo.dbname"));
+        MongoClient client = new MongoClient(MongoDB.Host);
+        DB db = client.getDB(MongoDB.PROPERTY);
         users = db.getCollection("Users");
     }
 

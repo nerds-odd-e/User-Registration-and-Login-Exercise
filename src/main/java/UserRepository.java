@@ -15,9 +15,9 @@ public class UserRepository {
     private DBCollection getUsers() {
         MongoClient client = null;
         try {
-            client = new MongoClient("192.168.56.103");
+            client = new MongoClient(System.getProperty("mongo.host"));
         } catch (UnknownHostException e) {
         }
-        return client.getDB("test").getCollection("Users");
+        return client.getDB(System.getProperty("mongo.dbname")).getCollection("Users");
     }
 }

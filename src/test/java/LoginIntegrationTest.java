@@ -26,8 +26,8 @@ public class LoginIntegrationTest {
 
     @Before
     public void createUser() throws Exception {
-        MongoClient client = new MongoClient(System.getProperty("mongo.host"));
-        DB db = client.getDB(System.getProperty("mongo.dbname"));
+        MongoClient client = new MongoClient(MongoDB.Host);
+        DB db = client.getDB(MongoDB.PROPERTY);
         users = db.getCollection("Users");
         BasicDBObject user = new BasicDBObject("username", "username").
                 append("password", "password");
